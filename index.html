@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Bike Factory - 3D Tycoon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 3D Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div class="ui-overlay">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="company-info">
+                    <h1>🏭 Mini Bike Factory</h1>
+                    <p>Build your empire, one bike at a time</p>
+                </div>
+                <div class="money-display">
+                    <div class="stat-box">
+                        <span class="label">Cash</span>
+                        <span class="value" id="money">$0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="label">Per Second</span>
+                        <span class="value" id="income">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left Panel - Actions -->
+            <div class="left-panel">
+                <div class="panel-box">
+                    <h3>⚙️ Production</h3>
+                    <button id="assembleBtn" class="action-btn primary-btn">
+                        <span>Assemble Bike</span>
+                        <small>Earn $<span id="bikeValue">50</span></small>
+                    </button>
+                    <button id="autoAssembleBtn" class="action-btn secondary-btn">
+                        <span>Auto Assemble</span>
+                        <small>Upgrade Cost: $<span id="autoCost">200</span></small>
+                    </button>
+                </div>
+
+                <div class="panel-box">
+                    <h3>📊 Upgrades</h3>
+                    <div class="upgrade-item">
+                        <span>Better Tools</span>
+                        <button class="upgrade-btn" data-upgrade="tools">+$<span data-cost="150">150</span></button>
+                    </div>
+                    <div class="upgrade-item">
+                        <span>Factory Speed</span>
+                        <button class="upgrade-btn" data-upgrade="speed">+$<span data-cost="300">300</span></button>
+                    </div>
+                    <div class="upgrade-item">
+                        <span>Worker Bonus</span>
+                        <button class="upgrade-btn" data-upgrade="workers">+$<span data-cost="500">500</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Panel - Factory Status -->
+            <div class="center-panel">
+                <div class="panel-box">
+                    <h3>🏗️ Factory Stations</h3>
+                    
+                    <div class="station">
+                        <div class="station-icon">⚡</div>
+                        <div class="station-info">
+                            <p class="station-name">Assembly Line</p>
+                            <p class="station-level">Level <span id="stationLevel1">1</span></p>
+                        </div>
+                        <div class="station-stats">
+                            <p class="production">+<span id="stationIncome1">50</span> bikes/min</p>
+                            <button class="upgrade-station" data-station="1">Upgrade $<span id="stationCost1">400</span></button>
+                        </div>
+                    </div>
+
+                    <div class="station">
+                        <div class="station-icon">🔧</div>
+                        <div class="station-info">
+                            <p class="station-name">Parts Workshop</p>
+                            <p class="station-level">Level <span id="stationLevel2">0</span></p>
+                        </div>
+                        <div class="station-stats">
+                            <p class="production">+<span id="stationIncome2">30</span> bikes/min</p>
+                            <button class="upgrade-station" data-station="2">Unlock $<span id="stationCost2">800</span></button>
+                        </div>
+                    </div>
+
+                    <div class="station">
+                        <div class="station-icon">🚗</div>
+                        <div class="station-info">
+                            <p class="station-name">Quality Control</p>
+                            <p class="station-level">Level <span id="stationLevel3">0</span></p>
+                        </div>
+                        <div class="station-stats">
+                            <p class="production">+<span id="stationIncome3">20</span> bikes/min</p>
+                            <button class="upgrade-station" data-station="3">Unlock $<span id="stationCost3">1500</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Stats & Achievements -->
+            <div class="right-panel">
+                <div class="panel-box">
+                    <h3>📈 Statistics</h3>
+                    <div class="stat-item">
+                        <span>Total Bikes Made</span>
+                        <strong id="totalBikes">0</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Total Revenue</span>
+                        <strong id="totalRevenue">$0</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Best Day</span>
+                        <strong id="bestDay">$0</strong>
+                    </div>
+                </div>
+
+                <div class="panel-box">
+                    <h3>🏆 Achievements</h3>
+                    <div class="achievement" id="ach1">
+                        <span class="icon">🎯</span>
+                        <span>First Bike</span>
+                    </div>
+                    <div class="achievement" id="ach2">
+                        <span class="icon">🌟</span>
+                        <span>Bike Maker</span>
+                    </div>
+                    <div class="achievement" id="ach3">
+                        <span class="icon">👑</span>
+                        <span>Factory Baron</span>
+                    </div>
+                    <div class="achievement" id="ach4">
+                        <span class="icon">💰</span>
+                        <span>Millionaire</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Production Counter -->
+            <div class="production-counter">
+                <p>Production: <strong id="bikeCounter">0</strong> bikes</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="spinner"></div>
+            <p>Loading your factory...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
